@@ -1,0 +1,245 @@
+/* Roaming Clan Design System */
+
+/* Color Palette */
+:root {
+  /* Primary Colors */
+  --primary-teal: #0D9488;
+  --primary-teal-hover: #0F766E;
+  --primary-teal-light: #CCFBF1;
+  
+  /* Gradient Colors */
+  --gradient-blue: #3B82F6;
+  --gradient-green: #10B981;
+  --gradient-purple: #8B5CF6;
+  --gradient-orange: #F59E0B;
+  
+  /* Neutral Colors */
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+  
+  /* Status Colors */
+  --success-green: #10B981;
+  --success-green-light: #D1FAE5;
+  --warning-yellow: #F59E0B;
+  --warning-yellow-light: #FEF3C7;
+  --error-red: #EF4444;
+  --error-red-light: #FEE2E2;
+  --info-blue: #3B82F6;
+  --info-blue-light: #DBEAFE;
+  
+  /* Background Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F9FAFB;
+  --bg-tertiary: #F3F4F6;
+  
+  /* Text Colors */
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-tertiary: #6B7280;
+  --text-inverse: #FFFFFF;
+}
+
+/* Gradients */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--gradient-blue) 0%, var(--gradient-green) 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, var(--gradient-purple) 0%, var(--gradient-orange) 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--primary-teal) 0%, var(--gradient-orange) 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, var(--success-green) 0%, var(--gradient-green) 100%);
+}
+
+/* Button Styles */
+.btn-primary {
+  @apply bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-lg transition-all duration-200;
+}
+
+.btn-danger {
+  @apply bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl;
+}
+
+.btn-success {
+  @apply bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl;
+}
+
+.btn-outline {
+  @apply border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-200;
+}
+
+/* Card Styles */
+.card-primary {
+  @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-200;
+}
+
+.card-gradient {
+  @apply bg-gradient-to-r from-blue-500 to-green-500 rounded-xl shadow-lg p-6 text-white;
+}
+
+.card-feature {
+  @apply bg-white rounded-xl shadow-md border border-gray-200 p-6 hover:shadow-lg hover:border-blue-300 transition-all duration-200;
+}
+
+/* Input Styles */
+.input-primary {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200;
+}
+
+.input-gradient {
+  @apply w-full px-4 py-3 border-2 border-transparent bg-gradient-to-r from-blue-50 to-green-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200;
+}
+
+/* Badge Styles */
+.badge-primary {
+  @apply px-3 py-1 bg-teal-100 text-teal-700 text-sm font-medium rounded-full;
+}
+
+.badge-secondary {
+  @apply px-3 py-1 bg-gray-200 text-gray-700 text-sm font-medium rounded-full;
+}
+
+.badge-success {
+  @apply px-3 py-1 bg-green-100 text-green-700 text-sm font-medium rounded-full;
+}
+
+.badge-warning {
+  @apply px-3 py-1 bg-yellow-100 text-yellow-700 text-sm font-medium rounded-full;
+}
+
+.badge-danger {
+  @apply px-3 py-1 bg-teal-100 text-teal-700 text-sm font-medium rounded-full;
+}
+
+/* Navigation Styles */
+.nav-link {
+  @apply text-gray-700 hover:text-gray-900 font-medium transition-colors duration-200;
+}
+
+.nav-link-active {
+  @apply text-blue-600 font-semibold;
+}
+
+/* Header Styles */
+.header-primary {
+  @apply bg-white border-b border-gray-200 shadow-sm;
+}
+
+/* Section Styles */
+.section-primary {
+  @apply bg-white rounded-xl shadow-sm p-8;
+}
+
+.section-secondary {
+  @apply bg-gray-50 rounded-xl p-8;
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes bounceIn {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.3); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.05); 
+  }
+  70% { 
+    transform: scale(0.9); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+/* Utility Classes */
+.text-gradient {
+  @apply bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent;
+}
+
+.border-gradient {
+  @apply border-2 border-transparent bg-gradient-to-r from-blue-500 to-green-500 bg-clip-border;
+}
+
+.shadow-gradient {
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(16, 185, 129, 0.04);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger,
+  .btn-success {
+    @apply py-2 px-4 text-sm;
+  }
+  
+  .card-primary,
+  .card-gradient,
+  .card-feature {
+    @apply p-4;
+  }
+  
+  .section-primary,
+  .section-secondary {
+    @apply p-6;
+  }
+}
+
+/* Dark Mode Support (for future) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1F2937;
+    --bg-secondary: #111827;
+    --bg-tertiary: #374151;
+    --text-primary: #F9FAFB;
+    --text-secondary: #D1D5DB;
+    --text-tertiary: #9CA3AF;
+  }
+}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function TripDetails() {
   const router = useRouter();
@@ -95,9 +96,9 @@ export default function TripDetails() {
             </div>
             
             <nav className="hidden md:flex space-x-8">
-              <a href="/" className="text-gray-700 hover:text-gray-900 font-medium">
+              <Link href="/" className="text-gray-700 hover:text-gray-900 font-medium">
                 JOIN A TRIP
-              </a>
+              </Link>
               <a href="/create-trip" className="text-gray-700 hover:text-gray-900 font-medium">
                 LEAD A TRIP
               </a>
@@ -293,9 +294,9 @@ export default function TripDetails() {
 
           {/* What's Special */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">WHAT'S SPECIAL?</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">WHAT&apos;S SPECIAL?</h3>
             <p className="text-sm text-gray-600 mb-4">
-              What's unique and special about your trip? List them down.
+              What&apos;s unique and special about your trip? List them down.
             </p>
             
             <div className="space-y-2 mb-4">

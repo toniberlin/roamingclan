@@ -4,20 +4,28 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { Header, Button, Badge } from '@/components/ui';
-import { TripService } from '@/lib/trip-service';
-import { Database, supabase } from '@/lib/supabase';
+import { Trip, TripStopRecord, CostItemRecord } from '@/lib/trip-service';
+import { supabase } from '@/lib/supabase';
 import { getPlaceholderImage } from '@/lib/placeholder-images';
 
-type Profile = Database['public']['Tables']['profiles']['Row'];
-type Trip = Database['public']['Tables']['trips']['Row'] & {
-  trip_stops: Database['public']['Tables']['trip_stops']['Row'][];
-  cost_items: Database['public']['Tables']['cost_items']['Row'][];
-};
+interface Profile {
+  id: string;
+  full_name: string;
+  bio?: string;
+  avatar_url?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+interface TripWithDetails extends Trip {
+  trip_stops: TripStopRecord[];
+  cost_items: CostItemRecord[];
+}
 
 export default function ProfilePage() {
   const { id } = useParams();
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [trips, setTrips] = useState<Trip[]>([]);
+  const [trips, setTrips] = useState<TripWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +42,7 @@ export default function ProfilePage() {
           .single();
 
         if (profileError) throw profileError;
-        setProfile(profileData);
+        setProfile(profileData as Profile);
 
         // Fetch user's trips
         const { data: tripsData, error: tripsError } = await supabase
@@ -49,7 +57,7 @@ export default function ProfilePage() {
           .order('departure_date', { ascending: true });
 
         if (tripsError) throw tripsError;
-        setTrips(tripsData || []);
+        setTrips((tripsData || []) as TripWithDetails[]);
 
       } catch (err) {
         console.error('Error fetching profile:', err);
@@ -85,7 +93,7 @@ export default function ProfilePage() {
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Profile Not Found</h2>
-            <p className="text-gray-600 mb-6">The profile you're looking for doesn't exist.</p>
+            <p className="text-gray-600 mb-6">The profile you&apos;re looking for doesn&apos;t exist.</p>
             <Button onClick={() => window.history.back()}>
               Go Back
             </Button>
@@ -113,7 +121,7 @@ export default function ProfilePage() {
             <div className="relative">
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
                 <Image
-                  src={profile.avatar_url || getPlaceholderImage(0)}
+                  src={profile.avatar_url || getPlaceholderImage(profile.full_name || 'Profile')}
                   alt={profile.full_name || 'Profile'}
                   width={128}
                   height={128}
@@ -141,21 +149,21 @@ export default function ProfilePage() {
 
               {/* Verification Badges */}
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                <Badge variant="success" className="flex items-center space-x-2">
+                <Badge type="success" className="flex items-center space-x-2">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   <span>Identity verified</span>
                 </Badge>
                 
-                <Badge variant="success" className="flex items-center space-x-2">
+                <Badge type="success" className="flex items-center space-x-2">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
                   <span>Phone verified</span>
                 </Badge>
                 
-                <Badge variant="primary" className="flex items-center space-x-2">
+                <Badge type="primary" className="flex items-center space-x-2">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -183,21 +191,21 @@ export default function ProfilePage() {
           </p>
 
           <div className="flex flex-wrap gap-3 mb-8">
-            <Badge variant="warning" className="flex items-center space-x-2">
+            <Badge type="warning" className="flex items-center space-x-2">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
               </svg>
               <span>Communication</span>
             </Badge>
             
-            <Badge variant="info" className="flex items-center space-x-2">
+            <Badge type="primary" className="flex items-center space-x-2">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
               </svg>
               <span>Informed</span>
             </Badge>
             
-            <Badge variant="success" className="flex items-center space-x-2">
+            <Badge type="success" className="flex items-center space-x-2">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clipRule="evenodd" />
               </svg>
@@ -210,7 +218,7 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-4 mb-4">
               <div className="w-12 h-12 rounded-full overflow-hidden">
                 <Image
-                  src={getPlaceholderImage(1)}
+                  src={getPlaceholderImage('Reviewer')}
                   alt="Reviewer"
                   width={48}
                   height={48}
@@ -219,7 +227,7 @@ export default function ProfilePage() {
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900">Sarah M.</h4>
-                <p className="text-sm text-gray-600">'Amazing Adventure in Japan', Dec 2023</p>
+                <p className="text-sm text-gray-600">&apos;Amazing Adventure in Japan&apos;, Dec 2023</p>
               </div>
             </div>
             <div className="flex items-center space-x-2 mb-3">
@@ -227,9 +235,9 @@ export default function ProfilePage() {
               <span className="text-sm font-medium">5/5</span>
             </div>
             <p className="text-gray-700">
-              "I had an incredible time traveling with {profile.full_name}. They were well-informed, 
+              &quot;I had an incredible time traveling with {profile.full_name}. They were well-informed, 
               made sure I felt comfortable and safe during the trip, and showed me amazing places 
-              I never would have found on my own. I can definitely recommend traveling with them!"
+              I never would have found on my own. I can definitely recommend traveling with them!&quot;
             </p>
           </div>
         </div>
@@ -243,18 +251,18 @@ export default function ProfilePage() {
                 <div key={trip.id} className="group cursor-pointer">
                   <div className="relative h-48 rounded-lg overflow-hidden mb-4">
                     <Image
-                      src={getPlaceholderImage(0)}
+                      src={getPlaceholderImage(trip.trip_name)}
                       alt={trip.trip_name}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-3 left-3">
-                      <Badge variant="secondary" className="bg-black/70 text-white">
+                      <Badge type="secondary" className="bg-black/70 text-white">
                         • {trip.categories[0] || 'Adventure'}
                       </Badge>
                     </div>
                     <div className="absolute top-3 right-3">
-                      <Badge variant="secondary" className="bg-black/70 text-white flex items-center space-x-1">
+                      <Badge type="secondary" className="bg-black/70 text-white flex items-center space-x-1">
                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
                         </svg>
@@ -264,7 +272,7 @@ export default function ProfilePage() {
                     <div className="absolute bottom-3 left-3">
                       <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white">
                         <Image
-                          src={profile.avatar_url || getPlaceholderImage(0)}
+                          src={profile.avatar_url || getPlaceholderImage(profile.full_name || 'Profile')}
                           alt={profile.full_name || 'Host'}
                           width={32}
                           height={32}
@@ -303,18 +311,18 @@ export default function ProfilePage() {
                 <div key={trip.id} className="group cursor-pointer">
                   <div className="relative h-48 rounded-lg overflow-hidden mb-4">
                     <Image
-                      src={getPlaceholderImage(0)}
+                      src={getPlaceholderImage(trip.trip_name)}
                       alt={trip.trip_name}
                       fill
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                     />
                     <div className="absolute top-3 left-3">
-                      <Badge variant="secondary" className="bg-black/70 text-white">
+                      <Badge type="secondary" className="bg-black/70 text-white">
                         • {trip.categories[0] || 'Adventure'}
                       </Badge>
                     </div>
                     <div className="absolute top-3 right-3">
-                      <Badge variant="secondary" className="bg-black/70 text-white flex items-center space-x-1">
+                      <Badge type="secondary" className="bg-black/70 text-white flex items-center space-x-1">
                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
                         </svg>
@@ -324,7 +332,7 @@ export default function ProfilePage() {
                     <div className="absolute bottom-3 left-3">
                       <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white">
                         <Image
-                          src={profile.avatar_url || getPlaceholderImage(0)}
+                          src={profile.avatar_url || getPlaceholderImage(profile.full_name || 'Profile')}
                           alt={profile.full_name || 'Host'}
                           width={32}
                           height={32}

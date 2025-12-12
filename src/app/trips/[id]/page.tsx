@@ -49,8 +49,8 @@ export default function TripDetailsPage() {
           .eq('id', tripData.user_id)
           .single();
 
-        if (!profileError) {
-          setHost(profile);
+        if (!profileError && profile) {
+          setHost(profile as Profile);
         }
 
         // Fetch trip stops

@@ -42,7 +42,11 @@ export default function TripsPage() {
 
             return {
               trip,
-              host: profile || { id: trip.user_id, full_name: 'Unknown Host' }
+              host: (profile || { id: trip.user_id, full_name: 'Unknown Host' }) as {
+                id: string;
+                full_name: string;
+                avatar_url?: string;
+              }
             };
           })
         );

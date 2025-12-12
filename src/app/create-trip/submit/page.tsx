@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TripService } from '@/lib/trip-service';
 import { useAuth } from '@/contexts/AuthContext';
+import Link from 'next/link';
 
 export default function SubmitTrip() {
   const router = useRouter();
@@ -185,9 +186,9 @@ export default function SubmitTrip() {
             </div>
             
             <nav className="hidden md:flex space-x-8">
-              <a href="/" className="text-gray-700 hover:text-gray-900 font-medium">
+              <Link href="/" className="text-gray-700 hover:text-gray-900 font-medium">
                 JOIN A TRIP
-              </a>
+              </Link>
               <a href="/create-trip" className="text-gray-700 hover:text-gray-900 font-medium">
                 LEAD A TRIP
               </a>
@@ -260,11 +261,11 @@ export default function SubmitTrip() {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Overview</label>
-                  <p className="text-gray-600">Join us for an amazing journey through Europe's most beautiful cities...</p>
+                  <p className="text-gray-600">Join us for an amazing journey through Europe&apos;s most beautiful cities...</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">About You</label>
-                  <p className="text-gray-600">I'm a passionate traveler who loves to explore new cultures...</p>
+                  <p className="text-gray-600">I&apos;m a passionate traveler who loves to explore new cultures...</p>
                 </div>
               </div>
             </div>

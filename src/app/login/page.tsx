@@ -34,7 +34,7 @@ export default function LoginPage() {
         // Redirect to create trip page after successful login
         router.push('/create-trip');
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred');
     } finally {
       setLoading(false);

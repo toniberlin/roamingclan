@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function CreateTrip() {
   const router = useRouter();
@@ -47,9 +48,9 @@ export default function CreateTrip() {
             </div>
             
             <nav className="hidden md:flex space-x-8">
-              <a href="/" className="text-gray-700 hover:text-gray-900 font-medium">
+              <Link href="/" className="text-gray-700 hover:text-gray-900 font-medium">
                 JOIN A TRIP
-              </a>
+              </Link>
               <a href="/create-trip" className="text-gray-700 hover:text-gray-900 font-medium">
                 LEAD A TRIP
               </a>
@@ -86,7 +87,7 @@ export default function CreateTrip() {
           {/* Welcome Message */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Hi! Let's get started!
+              Hi! Let&apos;s get started!
             </h2>
             <p className="text-gray-600">
               Create your trip and inspire others to join your adventure.

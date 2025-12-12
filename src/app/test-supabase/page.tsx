@@ -11,7 +11,7 @@ export default function TestSupabase() {
     const testConnection = async () => {
       try {
         // Test basic connection
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('trips')
           .select('count')
           .limit(1);

@@ -1,5 +1,5 @@
 // Placeholder images for trip cards
-export const getPlaceholderImage = (tripName: string, index: number = 0) => {
+export const getPlaceholderImage = (tripName: string) => {
   const images = [
     'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop&crop=center', // Travel
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center', // Mountains

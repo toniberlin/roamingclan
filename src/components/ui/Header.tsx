@@ -1,30 +1,31 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface HeaderProps {
   children?: React.ReactNode;
 }
 
-export const Header: React.FC<HeaderProps> = ({ children }) => {
+export const Header: React.FC<HeaderProps> = () => {
   return (
     <header className="header-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold">
+            <Link href="/" className="text-2xl font-bold">
               <span className="text-blue-600">ROAMING</span>{' '}
               <span className="text-teal-600">CLAN</span>
-            </h1>
+            </Link>
           </div>
           
           {/* Navigation */}
           <nav className="hidden md:flex space-x-8">
-            <a href="/" className="nav-link">
+            <Link href="/" className="nav-link">
               JOIN A TRIP
-            </a>
-            <a href="/create-trip" className="nav-link">
+            </Link>
+            <Link href="/create-trip" className="nav-link">
               LEAD A TRIP
-            </a>
+            </Link>
             <a href="#" className="nav-link">
               HOW IT WORKS
             </a>

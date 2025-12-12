@@ -3,18 +3,24 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { TripService } from '@/lib/trip-service';
+import { TripService, Trip, TripStopRecord, CostItemRecord } from '@/lib/trip-service';
 import { supabase } from '@/lib/supabase';
-import Image from 'next/image';
+
+interface Profile {
+  id: string;
+  full_name: string;
+  bio?: string;
+  avatar_url?: string;
+}
 
 export default function TripDetailsPage() {
   const params = useParams();
   const tripId = params.id as string;
   
-  const [trip, setTrip] = useState<any>(null);
-  const [host, setHost] = useState<any>(null);
-  const [tripStops, setTripStops] = useState<any[]>([]);
-  const [costItems, setCostItems] = useState<any[]>([]);
+  const [trip, setTrip] = useState<Trip | null>(null);
+  const [host, setHost] = useState<Profile | null>(null);
+  const [tripStops, setTripStops] = useState<TripStopRecord[]>([]);
+  const [costItems, setCostItems] = useState<CostItemRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -98,9 +104,9 @@ export default function TripDetailsPage() {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Trip Not Found</h2>
           <p className="text-gray-600 mb-6">{error || 'This trip does not exist or has been removed.'}</p>
-          <a href="/trips" className="btn-primary">
+          <Link href="/trips" className="btn-primary">
             Browse All Trips
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -123,16 +129,16 @@ export default function TripDetailsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <a href="/" className="text-2xl font-bold">
+              <Link href="/" className="text-2xl font-bold">
                 <span className="text-blue-600">ROAMING</span>{' '}
                 <span className="text-teal-600">CLAN</span>
-              </a>
+              </Link>
             </div>
             
             <nav className="hidden md:flex space-x-8">
-              <a href="/trips" className="text-gray-700 hover:text-gray-900 font-medium">
+              <Link href="/trips" className="text-gray-700 hover:text-gray-900 font-medium">
                 BROWSE TRIPS
-              </a>
+              </Link>
               <a href="/create-trip" className="text-gray-700 hover:text-gray-900 font-medium">
                 LEAD A TRIP
               </a>
@@ -198,7 +204,7 @@ export default function TripDetailsPage() {
           <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Itinerary</h2>
             <div className="space-y-6">
-              {tripStops.map((stop, index) => (
+              {tripStops.map((stop) => (
                 <div key={stop.id} className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-teal-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                     {stop.stop_number}

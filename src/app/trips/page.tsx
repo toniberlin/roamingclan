@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { TripService } from '@/lib/trip-service';
+import Link from 'next/link';
+import { TripService, Trip } from '@/lib/trip-service';
 import TripCard from '@/components/TripCard';
 import { supabase } from '@/lib/supabase';
 
 interface TripWithHost {
-  trip: any;
+  trip: Trip;
   host: {
     id: string;
     full_name: string;
@@ -33,7 +34,7 @@ export default function TripsPage() {
         // Fetch host information for each trip
         const tripsWithHosts = await Promise.all(
           publishedTrips.map(async (trip) => {
-            const { data: profile, error: profileError } = await supabase
+            const { data: profile } = await supabase
               .from('profiles')
               .select('id, full_name, avatar_url')
               .eq('id', trip.user_id)
@@ -131,9 +132,9 @@ export default function TripsPage() {
             </div>
             
             <nav className="hidden md:flex space-x-8">
-              <a href="/trips" className="text-teal-600 hover:text-teal-800 font-medium">
+              <Link href="/trips" className="text-teal-600 hover:text-teal-800 font-medium">
                 BROWSE TRIPS
-              </a>
+              </Link>
               <a href="/create-trip" className="text-gray-700 hover:text-gray-900 font-medium">
                 LEAD A TRIP
               </a>

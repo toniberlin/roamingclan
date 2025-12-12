@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPlaceholderImage, getCountryImage } from '@/lib/placeholder-images';
+import { getCountryImage } from '@/lib/placeholder-images';
 
 interface TripCardProps {
   trip: {
